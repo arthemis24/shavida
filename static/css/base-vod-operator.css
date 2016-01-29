@@ -1,0 +1,196 @@
+/*
+    Created on : Feb 18, 2014, 12:25:49 PM
+    Author     : Kom Sihon
+*/
+
+body {background: #111; color: #fff}
+.has-shade {box-shadow: 1px 1px 9px 4px rgba(0, 0, 0, .4)}
+
+.wrapper {margin: auto; width: 990px}
+#top {height: 64px; padding-top: 6px; position: fixed; top: 0; width: 100%}
+#top .logo {width: 221px}
+#top .logo > a {float: left; font-size: 36px; height: 42px; margin: -1px 0 0 24px; width: 200px; }
+#top .icon-menu {float: right; padding: 7px 5px}
+#top a {color: #fff; text-decoration: none}
+#top .login {cursor: pointer; float: right; margin: -3px 5px 0 0; padding: 15px 5px 9px}
+#top form span:not(.icon) {display: none}
+#top .icon-menu:hover, #top .login:hover, #navigation li a:hover, #navigation ul li a.current {background-color: rgba(255, 255, 255, .09)}
+#top.frozen {background: rgba(0, 0, 0, .54); height: 34px; transition: background .3s}
+#top.frozen:hover {background: rgba(0, 0, 0, .81); transition: background .3s}
+#top.frozen .logo {float: left; height: 41px; margin-top: -7px; padding-right: 31px}
+#top.frozen .logo > a {background-position: 0 48px}
+#top.frozen #side-nav {padding-top: 0}
+
+#side-nav {margin-top:28px; padding-top: 15px; position: absolute;  width: 252px}
+#side-nav .stage {background: rgba(0, 0, 0, .9); color: #555; border: 1px solid #000; margin-left: -252px;
+    padding: 15px; width: 220px; transition: margin-left .3s}
+#side-nav .stage.unveiled {margin-left: 0; transition: margin-left .3s}
+#side-nav nav.smart-categories ul {border-bottom: 1px solid #171717; float: left; margin-bottom: 9px; padding-bottom: 6px; width: 100%}
+#side-nav nav.smart-categories ul:empty {display: none}
+#side-nav nav.smart-categories ul li a {float: left; font-size: 1em; padding: 6px 0 8px 24px}
+#side-nav nav.smart-categories ul li.current {background: #111; border-radius: 2px}
+#side-nav nav.smart-categories ul li.current a {color: #160600}
+#side-nav nav, #more-categories nav {float: left; width: 220px}
+#side-nav ul li , #more-categories ul li {display: block; float: left; width: 100%}
+#side-nav ul li a, #more-categories ul li a {color: #666; font-family: Verdana, Arial, sans-serif; width: 100%}
+#side-nav ul li a:hover, #more-categories ul li a:hover {color: #bbb}
+nav.categories header {color: #666; font-size: 1.2em; margin-left: 6px; padding: 6px 0 9px 18px}
+nav.categories ul li {border-left: 4px solid transparent}
+nav.categories ul li:hover {background: rgba(31, 31, 31, 0.37)}
+nav.categories ul li.current {background: #FCE5DD; border-left: 4px solid #D17F00}
+nav.categories ul li a {float: left; font-size: 1em; padding: 5px 0 6px 24px}
+#more-categories {background: rgba(0, 0, 0, .9); border: 1px solid #000; margin:28px 0 0 -252px;
+    padding: 15px; position: absolute;  width: 220px; transition: margin-left .3s}
+#more-categories.unveiled {margin-left: 252px; transition: margin-left .3s}
+
+#search {float: left; margin-left: 180px}
+@media (max-width: 1024px) {
+    #search {margin-left: 78px}
+}
+#search input {background: transparent; border: none; border-bottom: 2px solid #ff6f11; border-radius: 0; color: #fff;
+    float: left; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none}
+#search input:active, #search input:focus {outline: none; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none}
+#search .magnifier {margin: 3px 0 0 -28px; opacity: .5; filter: alpha(opacity=50)}
+#search .spinner {background: url('http://static.cinemax.club/media/images/spinner-medium.gif') no-repeat center; background-size: 24px auto; height: 24px; margin: 3px 0 0 -28px; width: 24px}
+#search-results {background: #fff; border: solid 1px #FCE5DD; color: #7E594C; max-height: 510px; overflow: hidden; padding: 0; position: absolute; top: 38px; width: 275px; z-index: 100}
+#search-results .movie {border-bottom: solid 1px transparent; border-top: solid 1px transparent; float: left; height: 45px; padding: 2px 5px; width: 290px}
+#search-results .movie:hover {border-bottom: 1px solid #FDEFE0; border-top: 1px solid #FDEFE0; background: #FFEEE8}
+#search-results .movie .poster {background: no-repeat center 0; float: left; height: 45px; width: 45px}
+#search-results .movie .title {float: left; height: 15px; margin: 8px 0 0 10px; text-transform: capitalize; width: 235px}
+#search-results .movie .minor-tag {color: #BB7A66; float: left; font-size: 11px; height: 24px; margin-left: 10px; text-transform: capitalize; overflow: hidden; width: 235px}
+#search-results .no-result {line-height: 18px; padding: 15px; text-align: center}
+#search-content {float: right}
+
+
+#banner {background-repeat: no-repeat; background-size: 100% auto; height: 225px}
+
+#logo {float: left; margin: 3px 0 0 4px}
+#navigation {float: right; margin: -3px 30px 0 0}
+#navigation li {display: block; float: left; height: 37px}
+#navigation li a {float: left; padding: 15px 7px 9px}
+#navigation li a.last {border-right: none}
+
+#login-panel {background:#fff; margin-top: 38px; padding-bottom: 15px; position: absolute; right: 10px; width: 280px; z-index: 2}
+#login-panel .stage {padding: 0 10px 10px}
+#login-panel .title {font: normal 16px Arial}
+#login-panel input {font-size: 15px; margin-top: 10px; width: 97.5%}
+#top #login-panel a {color: #BD7300}
+#login-panel .suggest-signup {border-top: 1px solid #FCE5DD; float: left; margin-top: 15px; padding-top: 10px; width: 100%}
+
+#user-menu {margin: -4px 5px 0 0}
+#user-menu .panel {padding: 3px 5px 15px 10px; position: absolute; right: 0; top: 27px}
+#user-menu ul {background: rgba(0, 0, 0, .9); color: #555; border: 1px solid #000; clear: both; float: left; margin-top: 10px; padding: 0 15px 10px; width: 135px}
+#user-menu ul li {display: block; float: left; width: 100%}
+#user-menu ul li:first-child:hover {background: rgba(0, 0, 0, .9)}
+#user-menu ul li:not(:first-child):hover {background: rgba(31, 31, 31, 0.37)}
+#user-menu ul li a {color: #555; float: left; padding: 6px 10px; width: 100%}
+#user-menu ul li:hover a {color: #bbb; float: left; padding: 6px 10px; width: 100%}
+
+#top #cart.icon-menu {display: none}
+
+#content  {background: url('/shavida/static/img/1940434.jpg') no-repeat center fixed; padding: 70px 0 24px; width: 100%}
+#content .main-title {color: #fff; float: left; font-weight: 300; font-size: 2.429em; line-height: 115%; margin: 10px 0; width: 100%}
+#content .wrapper section {float: left; padding: 10px 10px 20px; width: 960px}
+#content .wrapper section:not(:first-child) {margin-top: 24px}
+#content .wrapper section header {color: #E86A00; border-bottom: 1px solid #341200; font-size: 2em; font-weight: lighter; margin-bottom: 10px}
+#content .wrapper section header span {float: none}
+#content .wrapper section header a {color: #E86A00; float: right; font-size: 12px; font-weight: normal; margin: 15px 3px 0 0; text-decoration: none}
+#content .wrapper section header a:hover {color: #fff}
+
+.item {box-sizing: border-box; float: left; height: 279px; padding: 10px; width: 239px}
+.item .poster {background-size: 240px auto; background-position: center -20px; box-sizing: border-box; float: left; height: 230px; width: 100%;
+                box-shadow: 1px 1px 9px 4px rgba(0, 0, 0, .42); transition: background-size .3s, box-shadow .3s}
+.item:hover .poster {background-size: 270px auto; box-shadow: 1px 1px 9px 4px rgba(255, 87, 0, 0.42); transition: background-size .3s, box-shadow .3s}
+.item.main {height: 559px; width: 479px}
+.item.main .poster {background-size: 462px auto; height: 480px}
+.item .title {color: #fff; font: bold 13px arial; float: left; height: 16px; margin-top: 3px; text-transform: capitalize; width: 100%}
+.item .clicks {color:#fff; float: left; font-size: 11px}
+.item .clicks span {float: none}
+.item .load {float: right; font-size: 11px}
+.item button {background: none}
+/* .media class is added to alias .item class without altering its rules */
+.media .actions {background: rgba(0, 0, 0, 0); float: left; height: 100%; width: 100%; transition: background .3s}
+.media:hover .actions {background: rgba(0, 0, 0, .6); transition: background .3s}
+.media .actions .trailer {background: none; border: none; float: left; height: 45px; margin-top: 15px; width: 100%}
+.media .actions .play {float: left; height: 135px; margin-top: 45px; width: 100%}
+.media .actions .trailer + .play {margin-top: 30px}
+
+table.items {border-collapse: collapse}
+table.items td {box-sizing: border-box; padding: 0; width: 240px}
+table.items td div.four-img {height: 279px; overflow: hidden; width: 239px}
+table.items td div.four-img > div {height: 558px; width: 478px}
+table.items td div.four-img.main {height: 559px; overflow: hidden; width: 479px}
+table.items td div.four-img.main > div {height: 1118px; width: 958px}
+
+/* MOVIE, SERIES DETAIL PAGE STYLE */
+#media {float: left; margin-top: 10px}
+#media .item {height: 300px; margin-top: -9px}
+#media .item .poster {background-position: center 0; background-size: auto; height: 270px; margin-bottom: 6px}
+#media .item .title {display: none}
+#media .item .clicks, #media .item .load {font-size: 13px}
+/*#movie .poster img {height: 100%; width: 100%}*/
+#media .categories {float: left; margin: 0 0 10px 15px}
+#media .synopsis {float: left; line-height: 25px; margin-left: 15px; width: 690px}
+#media .synopsis .title {font-size: 18px}
+#media .synopsis .content {margin-top: 5px; text-align: justify}
+.media.episode .actions {float: right; height: 24px; width: 60px}
+.media.episode .actions button {height: 36px; margin: 0; width: 60px}
+#media .item .poster .actions .play {display: none}
+
+#suggestions .item .poster {background-position: center top; background-size: 180px auto; float: left; height: 200px; width: 175px}
+#suggestions .item:hover .poster {background-size: 210px auto}
+#suggestions .item .title {font: bold 14px arial; float: left; height: 14px; margin-top: 5px; overflow: hidden; text-transform: capitalize; width: 100%}
+#suggestions .load {display: none}
+#suggestions .movie button {float: right}
+#avatar {background: url("http://static.cinemax.club/media/images/login-avatar.jpg") no-repeat center; height: 150px; margin: auto; width: 100%}
+#content.movie-detail header {text-transform: capitalize}
+#content.movie-detail #suggestions {clear: both; margin-top: 15px}
+#content.movie-detail #suggestions > .title {margin-bottom: 6px}
+
+#content.series-detail section:first-child {float: left; padding: 15px; width: 740px}
+#content.series-detail section:not(:first-child) {margin-top: 0}
+#content.series-detail section header {font-size: 2em; margin-bottom: 6px; text-transform: capitalize}
+#content .episodes-list {clear:both; float: left; margin-top: 40px; width: 738px}
+#content .episodes-list li {display: block}
+#content .episodes-list button {background-color: #fff; border: none; box-shadow: none; float: right; width: 60px; height: 24px}
+#content .episodes-list .episode {border-top: solid 1px #FCE5DD; float: left; padding: 5px 0; width: 100%}
+#content .episodes-list .name {float: left; margin-top: 5px; width: 540px}
+#content .episodes-list .name  span+span{color: #BB7A66; margin-left: 7px}
+#content .episodes-list .order {float: right}
+#content.series-detail #suggestions {float: right; padding: 9px; width: 175px}
+#content.series-detail #suggestions .item {border-bottom: solid 1px #FCE5DD; float: left; height: 240px; margin: 10px 0; padding: 0 0 9px 0; width: 176px}
+#content.series-detail #suggestions .item:first-child {margin: 2px 0 10px}
+#content.series-detail #suggestions .item:last-child {border-bottom: none}
+
+#content.search .wrapper section > .item {float: left; height: 317px; margin: 6px 7px 15px 0; padding: 9px; width: 233px}
+#content.search .wrapper section > .item:nth-child(4n) {float: right}
+
+#username {color: #7E594C; font-size: 15px; font-style: italic; float: right; margin-top: 42px; padding: 8px}
+nav#sub ul {float: left; margin-top: -12px}
+nav#sub li {display: inline; float: left; padding: 0 15px}
+nav#sub li a {border-bottom: 2px solid transparent; float: left; font-size: 14px; padding: 15px 3px 6px; text-decoration: none}
+nav#sub li a:hover {border-bottom: 2px solid #BB4824}
+nav#sub li.current a {border-bottom: 2px solid #BB4824; color: #300c00; font-weight: bold}
+nav#sub .user-info {float: right; margin: 10px 30px 0 0}
+nav#sub .logout {clear: both; color: #555C77; float: right; font-size: 11px; margin-top: 5px}
+
+.notice {clear: both; color: #777; font-size: 11px; margin-top: 3px}
+.dialog.confirm button {float: right; width: 95px}
+
+.bundle {border: 2px solid #000; box-shadow: 1px 1px 9px 4px rgba(0, 0, 0, 0); box-sizing: border-box; float: left;
+    margin: 24px 22px 0 0; width: 180px; transition: box-shadow .3s}
+.bundle:hover {box-shadow: 1px 1px 9px 4px rgba(255, 87, 0, 0.42); transition: box-shadow .3s}
+.bundle:nth-child(5n) {margin-right: 0}
+.bundle h3 {background: #000; color: #fff; font-size: 33px; padding: 18px 0; text-align: center}
+div.about {color: #fff; padding-bottom: 18px; text-align: center}
+div.about span {float: left; font-size: 14px; list-style: none; padding: 10px 0; width: 100%}
+div.about ul {margin-top: 15px}
+div.about ul li {float: left; font-size: 14px; list-style: none; padding: 2px 0; width: 100%}
+div.about ul li:first-child {height: 42px; line-height: 18px}
+div.about ul li:empty {display: none}
+div.bundle div.about span.cost {color: #ED1F24; font-size: 27px; font-weight: bold; margin-top: 12px; padding: 0; text-align: center}
+div.about button {margin-top: 12px; width: 130px}
+.dialog.confirm-bundle {color: #333}
+.dialog.confirm-bundle .pay-now {border-bottom: 1px solid #eee}
+.dialog.confirm-bundle ul li {border: 1px solid #bbb; display: inline; float: left; padding: 6px; margin-right: 9px}
+#lightbox .dialog {border-color: #01286F; color: #555}

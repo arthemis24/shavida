@@ -1,0 +1,83 @@
+<script type="text/javascript">
+    (function() {
+        /**********************************************************************/
+        /**************************   VOD HANDLERS    *************************/
+        /**********************************************************************/
+        $('.media .actions .play:not(.connect), .media .actions .trailer').live('click', function() {
+            var type = $(this).data('type'),
+                id = $(this).data('id'),
+                itemUrl = '{% url 'movies:stream' 'type' 'id' %}'.replace('/type/id', '') + type + '/' + id,
+                size = $(this).data('size'),
+                $dialogPlayer = $('div#lightbox .dialog.player');
+            $('div#lightbox .dialog').hide();
+            $('div#lightbox .dialog.player video, div#lightbox .dialog.player .stream-error').hide();
+            $dialogPlayer.addClass('spinner');
+            $dialogPlayer.show();
+            $('#lightbox').addClass('stream').fadeIn();
+            $.getJSON(itemUrl, {is_check: 'yes'}, function(data) {
+                $dialogPlayer.removeClass('spinner');
+                if (data.error) {
+                    showStreamError(data.error);
+                } else {
+                    $dialogPlayer.addClass('stream');
+                    $('div#lightbox .dialog.player .stream-error').hide();
+                    var domData = {type: type, id: id, size: size};
+                    if (type != 'trailer')
+                        $('div#lightbox .dialog.player video').removeClass('trailer').data(domData).attr('src', itemUrl).show();
+                    else
+                        $('div#lightbox .dialog.player video').addClass('trailer').data(domData).attr('src', itemUrl).show();
+                }
+            });
+            return false
+        });
+        var count = true,
+            durationPreviouslyLoaded = 0,
+            counterInterval = '{{ VOD_COUNTER_INTERVAL }}' * 1000;
+        $('div#lightbox .dialog.player video').bind('progress', function() {
+            if ($(this).hasClass('trailer')) return;
+            var range = 0,
+                bf = this.buffered,
+                time = this.currentTime,
+                duration = this.duration,
+                type = $(this).data('type'),
+                id = $(this).data('id'),
+                size = $(this).data('size') * 1000000,
+                _video = this;
+            try {
+                while(!(bf.start(range) <= time && time <= bf.end(range))) {
+                    range += 1;
+                }
+            } catch(e) {
+                return
+            }
+            if (count) {
+                count = false;
+                setTimeout(function() {
+                    var durationLoaded = bf.end(range) - bf.start(range);
+                    var durationLatelyLoaded = durationLoaded - durationPreviouslyLoaded;
+                    durationPreviouslyLoaded = durationLoaded;
+                    var bytesLatelyLoaded = Math.round(durationLatelyLoaded / duration * size);
+                    if (bytesLatelyLoaded > 0) {
+                        var params = {type: type, media_id: id, duration: durationLatelyLoaded, bytes: bytesLatelyLoaded};
+                        $.getJSON('{% url 'movies:debit_vod_balance' %}', params, function(data) {
+                            if (data.balance <= 0) {
+                                _video.pause();
+                                showStreamError(data.error)
+                            }
+                        });
+                    }
+                    count = true
+                }, counterInterval)
+            }
+        }).bind('contextmenu',function() { return false });
+        $('div#lightbox .close').click(function() {
+            $('div#lightbox').removeClass('stream');
+            document.getElementsByTagName('video')[0].pause();
+        });
+        function showStreamError(msg) {
+            $('div#lightbox .dialog.player video').hide();
+            $('div#lightbox .dialog.player').removeClass('stream');
+            $('div#lightbox .dialog.player .stream-error').show().find('p').html(msg);
+        }
+    })()
+</script>

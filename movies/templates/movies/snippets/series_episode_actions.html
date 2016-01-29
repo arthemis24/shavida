@@ -1,0 +1,40 @@
+{% load i18n %}
+{% if IS_VOD_OPERATOR %}
+    <div class="actions">
+        {% if not request.user.is_authenticated %}
+            <button class='icon play connect' title="{% trans "Watch streaming" %}"></button>
+        {% else %}
+            <button class='icon play' title="{% trans "Watch streaming" %}" data-type="series" data-id="{{ episode.id }}" style="float: left"></button>
+        {% endif %}
+    </div>
+{% else %}  {# Case of Content Vendor #}
+    {% if config.vod %}
+        <div class="actions">
+            {% if not request.user.is_authenticated %}
+                <button class='icon play connect' title="{% trans "Watch streaming" %}"></button>
+                <button class='icon cart connect' title="{% trans "Order for your VOD store." %}"></button>
+            {% else %}
+                <button class='icon play' title="{% trans "Watch streaming" %}" data-type="series" data-id="{{ episode.id }}" style="float: left"></button>
+                {% if request.user.has_pending_order %}
+                    <button class='icon cart processing' title="{% trans "Order for your VOD store." %}" style="float: left; margin-right: 3px"></button>
+                {% else %}
+                    <button class='icon cart order confirm' style="margin-top: 0" title="{% trans "Order for your VOD store." %}" id="{{ episode.id }}"
+                            data-id='{{ episode.id }}' data-title="{{episode.title}}" data-load='{{ episode.load }}'
+                            data-type='series' data-is_adult="{{ episode.is_adult }}" data-poster="url('{{ media.poster.small_url }}')"></button>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% else %}
+        {% if not request.user.is_authenticated %}
+            <button class='connect confirm' title="{% trans "Order for your VOD store." %}">{% trans "Order" %}</button>
+        {% else %}
+            {% if request.user.has_pending_update %}
+                <button class='processing confirm' title="{% trans "Order for your VOD store." %}">{% trans "Order" %}</button>
+            {% else %}
+                <button class='order confirm' style="margin-top: 0" title="{% trans "Order for your VOD store." %}" id="{{ episode.id }}"
+                        data-id='{{ episode.id }}' data-title="{{episode.title}}" data-load='{{ episode.load }}'
+                        data-type='series' data-is_adult="{{ episode.is_adult }}" data-poster="url('{{ media.poster.small_url }}')">{% trans "Order" %}</button>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}

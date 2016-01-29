@@ -1,0 +1,124 @@
+{% extends "ikwen/account.html" %}
+{% load i18n %}
+{% load humanize %}
+{% load staticfiles %}
+{% block sub_custom_head %}
+    <style>
+        .wrapper section.plan label {width: 240px}
+        .wrapper section.plan span {float: left}
+        .wrapper section .action-edit {color: #BD7300; cursor: pointer; font-size: 15px}
+        .wrapper section .multi-lines {float: left; font-size: 15px}
+        .update-result {position: absolute; width: 500px}
+        .update-result .message {margin: -15px auto 0; width: 360px}
+        .wrapper section form label {font-size: 14px; font-weight: normal; margin-right: 15px; text-align: right; width: 180px}
+        .wrapper section form button {width: 78px}
+        #adult-warning {border: 1px solid #fd5d5d; float: left; margin-top: 15px; padding: 6px 2%; width: 96%}
+        .dialog.confirm-adult p {float: right; margin: 12px 20px 0 0; width: 400px}
+        .dialog.confirm-adult button {float: right; width: 100px}
+    </style>
+{% endblock %}
+
+{% block custom_info %}
+    <div style="float: right; width: 480px">
+        <section class="plan" style=" width: 450px">
+            <div class="update-result">
+                <p class="message hidden"></p>
+            </div>
+            <header>
+                <span> {% trans "Bundle" %} </span>
+                <span class="icon" style="background-position: -158px -9px"></span>
+            </header>
+            <div class="detail">
+                {% if last_vod_prepayment %}
+                    <label>{% trans "Last refill" %}</label>
+                    <div class="multi-lines">
+                        <div>
+                            <span> <b> {{ last_vod_prepayment.amount|intcomma }} {{ CURRENCY }} </b> - {{ last_vod_prepayment.view_when }}</span>
+                            {% if last_vod_prepayment.days_left < 0 %}
+                                <span class="minor expired"><b>{% trans "Your bundle is sold out." %}</b></span>
+                            {% else %}
+                                <span class="minor"><b>{{ last_vod_prepayment.balance }} GB</b> {% trans "left" %}</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'movies:bundles' %}" style="clear:both; float: left"> {% trans "Extend" %}</a>
+                    </div>
+                {% else %}
+                    <label>{% trans "No bundle" %}</label>
+                    <a href="{% url 'movies:bundles' %}" class="action-edit">{% trans "Choose a bundle" %}</a>
+                {% endif %}
+            </div>
+            {% if last_vod_prepayment and last_vod_prepayment.days_left >= 0 %}
+                <div class="detail" style="clear: both">
+                    <label>{% trans "Expiry" %}</label>
+                    <div class="multi-lines">
+                        <div>
+                            <span><b>{{ last_vod_prepayment.days_left }}</b> {% trans "day(s) left" %}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.can_order_adult %}
+                <div id="adult-warning">
+                    <img src="{% static 'img/warning-icon.png' %}" width="45" style="float: left"/>
+                    {% if not request.user.adult_authorized %}
+                        {% blocktrans %}
+                            <span style="margin: 12px 0 0 15px">You don't have access to adult content - <a href="#">Activate access</a> *</span>
+                        {% endblocktrans %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
+{% block lightbox_dialogs %}
+    <div class="dialog confirm-adult has-shade" style="border: 1px solid #fd5d5d; width: 510px; height: 212px;">
+        <div class="stage" style="height: 80px; padding: 10px 10px 6px">
+            <div style="font-size: 16px">
+                <img src="{% static 'img/warning-icon.png' %}" width="45" style="float: left"/>
+                <span style="margin: 12px 0 0 24px">{% trans "Confirm" %}</span>
+            </div>
+            <p style="line-height: 24px; text-align: justify">
+                {% trans "By activating this content you confirm that you meet the requirements regarding age in your country." %}
+            </p>
+            <p style="color: #BB7A66; font-size: 11px; margin-bottom: 10px"> * Seul un forfait d'au moins <strong>2 500 F</strong> permet d'y avoir accès.</p>
+            <div class='controls' style="border-top: solid 1px #FCE5DD; clear: both; margin-top: 15px; padding-top: 5px">
+                <button class="default">Annuler</button>
+                <button class="confirm" style="margin-right: 15px">Confirmer</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block sub_custom_js %}
+    <script>
+        (function() {
+            $('div#adult-warning a').click(function() {
+                $('#lightbox').fadeIn();
+                return false
+            });
+            $('.dialog.confirm-adult button.confirm').click(function() {
+                $('body, button').css('cursor', 'wait');
+                $.getJSON("{% url 'me:authorize_adult' %}", null, function(data) {
+                    $('body, button').css('cursor', 'default');
+                    if (data.error) alert(data.error);
+                    else {
+                        $('div#adult-warning span:first').hide();
+                        $('div#adult-warning span:last').show();
+                        $('#lightbox').fadeOut()
+                    }
+                })
+            });
+            $('div#lightbox button.default').click(function() {
+                $('div#lightbox .dialog').hide();
+                $('#lightbox').fadeOut()
+            });
+            {% if request.GET.bundleChosen %}
+                $('div#top-notice-ctnr span').html("Votre forfait a été activé avec succès, vous pouvez <a href='{% url 'movies:home' %}'><b>commander maintenant</b></a>");
+                $('div#top-notice-ctnr').fadeIn('slow');
+            {% endif %}
+            {% if welcome_offer %}
+                $('div#top-notice-ctnr span').html("Bienvenue sur Cinemax.club. Vous bénéficiez de <strong>1 Giga de films gratuit</strong> - <a href='{% url 'movies:home' %}'><b>Commandez maintenant</b></a>");
+                $('div#top-notice-ctnr').fadeIn('slow');
+            {% endif %}
+        })()
+    </script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "touch/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block meta %}
+<meta name="abstract" content="CINEMAX.CLUB - Inscription"/>
+{% endblock %}
+{% block page_title %} <title> Cinemax Club | Inscription </title> {% endblock %}
+{% block custom_head %}
+
+{% endblock %}
+{% block content %}
+    <style type="text/css">
+        #search, #login-form {display: none}
+        form>div {padding: 0px 0px 0px;width: 100%}
+        #navigation li.register a {background: rgba(255, 255, 255, .09)}
+        #content {min-height: 450px}
+        #register {float: left; ; width: 100%}
+        #register input {font-size: 18px; height: 30px; margin-top: 10px; width: 100%}
+        #register input:first-child {margin-top: 0}
+        ul.errorlist li {color: #FF0000; display: block; margin-top: 2px}
+        #lightbox .dialog .stage div {clear: both}
+        #lightbox .dialog.summary .stage div:not(:last-child) {height: 24px}
+        #lightbox .dialog .stage label {color: #BB7A66; float: left; width: 90px}
+        #lightbox .dialog .button {float: right; width: 66px}
+
+    </style>
+    <div class="wrapper">
+        <div data-role='content' id="content" style="padding-bottom: 30px">
+            <div id="user-info">
+                <form id="register" action="{% url 'me:register' %}" method="post" > {% csrf_token %}
+                    <div class='main-title' style="line-height: 1; margin: 0; width: 100%"> Inscription </div>
+                    <input type="text" class="phone" name="phone" placeholder="Phone">
+                    {{ form.phone.errors }}
+                    <input type="email" class="email" name='email' placeholder="Email">
+                    {{ form.email.errors }}
+                    <input type="text" class="password" name='password' placeholder="Password">
+                    {{form.password.errors }}
+                {% if request.user.is_authenticated and request.user.account_type == 'Retailer' %}
+                    <input type="hidden" name='referrer' value="{{ request.user.username }}">
+                    <input type="text" class="username" name='username' placeholder="Nom & Prénom">
+                    <div style="width: 100%">
+                        <div class="fancy-combo-box gender"  style="margin-top: 0; width: 100%">
+                            <input type="text" class="gender" placeholder="Je suis ..." readonly style="width: 93.5%"/>
+                            <input type="hidden" value="" name="gender" />
+                            <span class="arrow" comment="arrow-bg" style="height: 2.97em; margin-top: -.6em;"><span comment="arrow-img"></span></span>
+                            <div class="entries-overlay hidden" style="padding-top: 32px; width: 100%;margin-left: 0px;">
+                                <ul class="entries has-shade" style="margin-left: -10px">
+                                    <li class="entry" val="Female">Une femme</li>
+                                    <li class="entry" val="Male">Un homme</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                    <div style="clear: both; float: left">
+                        <input type="checkbox" id="agree-terms" checked style="float: left; margin-right: 5px; width: 12px"/>
+                        <div style="float: right; width: 278px">
+                            <span style="margin-right: 2px"> Je confirme avoir lu et accepté les </span>
+                            <a href="#"> termes et conditions du services </a>
+                        </div>
+                    </div>
+                    <button class="default" style="margin-top: 24px; padding: 10px 20px"> Je m'inscris </button>
+                </form>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}

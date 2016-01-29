@@ -1,0 +1,129 @@
+{% extends "me/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block page_title %} <title>{{ WEBSITE_NAME }} - {% trans "History" %}</title> {% endblock %}
+{% block custom_head %}
+    <style type="text/css">
+        nav#sub .history {border-bottom: 2px solid #BB4824; color: #300c00; font-weight: bold}
+        #content {min-height: 450px}
+        #content .order {border: solid 1px #FCE5DD; cursor: pointer; float: left; margin: 6px 10px 15px 0; height: 280px; padding: 9px; width: 210px;}
+        .highlight {background: #FCE5DD}
+        #content .order .poster {background: no-repeat center -8px; background-size: 230px auto;float: left; height: 230px; width: 210px}
+
+        #content .order div {text-align: center}
+        #content .order .cost span:first-child {float: left; margin:13px 8px}
+        #content .order .date {color: #300C00; float: left; font-size: 16px; height: 20px; margin-top: 10px; width: 176px}
+        #content .order .summary {color: #BB7A66; float: left; font-size: 13px; width: 100%}
+        #content .order .summary span {float: none}
+        #content .order .size {float: left; width: 100%}
+        #content .order .size span {margin-right: 3px}
+        #content .order .amount {margin-top: 5px}
+        #content .order .currency {margin: 5px 0 0 2px}
+        .row, .row .master, .row .details {float: left; width: 100%}
+        .master .order-row {height: 300px}
+        .row .details {border-top: 1px solid #FCE5DD; float: left; padding-bottom: 27px}
+        .row .details .stage {float: left; margin-left: 5px; width: 770px}
+        .stage .movie {float: left; height: 85px; margin: 5px; width: 80px}
+
+        nav#sub, #sales-logout {display: none}
+        .details .movie {background: no-repeat center -8px; background-size: 80px auto; border: 1px solid #FCE5DD; float: left; height: 80px; margin: 4px 3px 0 0; overflow: hidden; width: 80px}
+        .details .movie .about {background: rgba(255, 255, 255, .85); height: 27px; top: 53px; padding-left: 3px; position: relative}
+        .details .movie .about .title  {color: #7E594C}
+        .details .movie .name {height: 14px; text-transform: capitalize}
+    </style>
+{% endblock %}
+{% block content_stage %}
+    <div id="content">
+        <div class="wrapper">
+            <section class="subtle-shade">
+                <header>{% trans "Recent orders" %}</header>
+                <div class="stage">
+                    <div class="spinner" style="clear: both; height: 240px"></div>
+                    {% if IS_VOD_OPERATOR %}
+                        <div class="no-result hidden">
+                            <span style="margin: 7px 20px 0 0">{% trans "You never watched anything before" %}</span>
+                            <a href="{% url 'movies:home' %}" class="button default">{% trans "Try now" %}</a>
+                        </div>
+                    {% else %}
+                        <div class="no-result hidden">
+                            <span style="margin: 7px 20px 0 0">{% trans "You never ordered before" %}</span>
+                            <a href="{% url 'movies:home' %}" class="button default">{% trans "Try now" %}</a>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="master">
+                            <div class='order tpl' orderId="">
+                                <div class="poster"></div>
+                                <div class='date'> 28/08/2014 </div>
+                                <div class="summary">
+                                    <span class="size"> 32 </span> Eléments -
+                                    <span class='amount hidden'>2300</span>
+                                    <span class="currency">Fr</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details hidden">
+                            <div class="close caution text-has-shade" style="font-size: 18px"> X </div>
+                            <div class="stage">
+                                <div class='movie tpl hidden'>
+                                    <div class="about">
+                                        <div class='name has-faded-edge'>
+                                            <span class="title"></span>
+                                            <span class="faded-edge"></span>
+                                        </div>
+                                        <div class='cost hidden'>
+                                            <span class="value"></span>
+                                            <span>Fr</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if IS_CONTENT_VENDOR %}
+                                <span class="button warning" style="float: right; margin: 24px 5px 0 0">{% trans "Cancel order" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript" src="{% static 'me/js/me.js' %}"></script>
+    <script type="text/javascript">
+        (function() {
+            var origin = 'site';
+            $('.row .details .close').click(function() {
+                $('.row .details').hide()
+            });
+            $('div#content .order').live('click', function() {
+                if (!$(this).hasClass('highlight')) {
+                    $('.highlight').removeClass('highlight')
+                }
+                var $ordersRow = $(this).parent(),
+                    orderId = $(this).attr('id'),
+                    status = $(this).attr('status');
+                $('.details .movie').hide();
+                $('.details .movie[orderId=' + orderId + ']').show();
+                if (status == 'Pending' || status == 'Authorized')
+                    $('.details .button.warning, a#find-pos, .dialog.point-of-sales input').attr('orderId', orderId).show();
+                else $('.details .button.warning, a#find-pos').hide();
+                $('.row .details').insertAfter($ordersRow).show()
+            });
+            $('.row .button.warning').click(function() {
+                if (!confirm("Sure you want to cancel this order ?")) return;
+                var orderId = $(this).attr('orderId');
+                ikwen.cancelOrder("{% url 'reporting:cancel_order' %}", orderId)
+            });
+            {% if request.GET.cancelLast %}
+                ikwen.listOrders("{% url 'me:history' %}", origin, function() {
+                    $('div#content .details').addClass('highlight');
+                    $('div#content .order[status=Pending], div#content .order[status=Authorized]').addClass('highlight').click()
+                });
+            {% else %}
+			    ikwen.listOrders("{% url 'me:history' %}", origin);
+            {% endif %}
+        })()
+    </script>
+{% endblock %}

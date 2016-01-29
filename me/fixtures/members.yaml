@@ -1,0 +1,45 @@
+- model: ikwen.member
+  pk: 56eb6d04b37b3379b531e011
+  fields:
+    email: member1@ikwen.com
+    password: pbkdf2_sha256$12000$nNK3SeCKYSvl$CuoviZNeie9YzaWhukVCi9iQtNmpu3QBbK2yHGHEUxc=  # admin
+    phone: 677000001
+
+- model: me.profile
+  fields:
+    member: 56eb6d04b37b3379b531e011
+
+- model: ikwen.member
+  pk: 56eb6d04b37b3379b531e012
+  fields:
+    email: member2@ikwen.com
+    password: pbkdf2_sha256$12000$nNK3SeCKYSvl$CuoviZNeie9YzaWhukVCi9iQtNmpu3QBbK2yHGHEUxc=  # admin
+    phone: 677000002
+
+- model: me.profile
+  fields:
+    member: 56eb6d04b37b3379b531e012
+    is_vod_operator: Yes
+
+- model: ikwen.member
+  pk: 56eb6d04b37b3379b531e013
+  fields:
+    email: member3@ikwen.com
+    password: pbkdf2_sha256$12000$nNK3SeCKYSvl$CuoviZNeie9YzaWhukVCi9iQtNmpu3QBbK2yHGHEUxc=  # admin
+    phone: 677000003
+
+- model: me.profile
+  fields:
+    member: 56eb6d04b37b3379b531e013
+
+- model: ikwen.member
+  pk: 56eb6d04b37b3379b531e014
+  fields:
+    email: member4@ikwen.com
+    password: pbkdf2_sha256$12000$nNK3SeCKYSvl$CuoviZNeie9YzaWhukVCi9iQtNmpu3QBbK2yHGHEUxc=  # admin
+    phone: 677000004
+
+- model: me.profile
+  fields:
+    member: 56eb6d04b37b3379b531e014
+    adult_authorized: Yes

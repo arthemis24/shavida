@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Cinemax Club - Rapport de publication de contenu</title>
+        <style>
+            body {font: normal 12px Arial, sans-serif}
+            header {font: normal 24px Helvetica, Arial, sans-serif; margin-top: 30px}
+            table {border-collapse: collapse; margin-top: 30px; width: 100%}
+            thead tr:first-child {font: normal 21px Verdana, Arial, sans-serif}
+            thead tr:last-child {font: normal 18px Arial, sans-serif}
+            thead td {padding: 4px 9px}
+            td {border: 1px solid #ddd; box-sizing: border-box}
+            span {color: #999}
+            span.alert {color: #FF0000; font-weight: bold}
+            span.warning {color: #ffa139; font-weight: bold}
+            ul {border-right: 1px solid #ddd; box-sizing: border-box; float: left; line-height: 21px; margin: 0; padding: 0 10px; width: 410px}
+            li {list-style-type: none}
+        </style>
+    </head>
+    <body>
+        <div style="margin: auto; width: 1200px; padding-bottom: 60px">
+            <header>
+                Rapport de publication des contenus: <strong>{{ date }}</strong>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <td colspan="2">Films: <strong>{{ count_offline_movies }} inexploités</strong></td>
+                        <td>Séries: <strong>{{ unimported_series|length }} inexploitées</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 411px">
+                            <span>{{ unimported_movies|length }} non importés</span> / {{ count_movies }}: <span class="alert">{{ percent_unimported_movies }}%</span>
+                        </td>
+                        <td style="width: 410px">
+                            <span>{{ unpublished_movies|length }} non publiés</span> / {{ count_movies }}: <span class="warning">{{ percent_unpublished_movies }}%</span>
+                        </td>
+                        <td>
+                            <span>{{ unimported_series|length }} non importées</span> / {{ count_series }}: <span class="alert">{{ percent_unimported_series }}%</span>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <ul>
+                                {% for name in unimported_movies %}
+                                    <li>{{ name }}</li>
+                                {% endfor %}
+                            </ul>
+{#                        </td>#}
+{#                        <td>#}
+                            <ul>
+                                {% for name in unpublished_movies %}
+                                    <li>{{ name }}</li>
+                                {% endfor %}
+                            </ul>
+{#                        </td>#}
+{#                        <td>#}
+                            <ul style="border-right: none; width: 376px">
+                                {% for name in unimported_series %}
+                                    <li>{{ name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block page_title %} <title> {{ WEBSITE_NAME }} | {% trans "Search" %} </title> {% endblock %}
+{% block custom_head %}
+    <style type="text/css">
+        section header {font-size: 2em}
+        nav#sub, #sales-logout {display: none}
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="content" class="search">
+        <div class="wrapper">
+            <section>
+                {% if items|length == 0 %}
+                    <header class="no-result">
+                        {% trans "No result for" %} <b>"{{ request.GET.radix }}"</b>
+                        {% if not request.user.is_authenticated %}
+                            {% blocktrans %}<a href="#" class="login-for-more" style="color: #BD7300; text-decoration: underline">Login</a> for a better search{% endblocktrans %}
+                        {% endif %}
+                    </header>
+                {% else %}
+                    <header class='main-title'> {% trans "Results for" %} <b>"{{ request.GET.radix }}"</b></header>
+                    {% for media in items %}
+                        <div class='item media'>
+                            {% include 'movies/snippets/media_detail_actions.html' %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </section>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript">
+        (function() {
+            $('div#lightbox .login').click(function() {
+                $('#login-panel').slideDown();
+                $('div#login-panel form input:first').focus();
+                $('#lightbox').fadeOut();
+                return false
+            });
+            // ask the user to connect if he is not when triying to order movies
+            $('.item .icon.connect').live('click', function() {
+                $('#lightbox').fadeIn().removeClass('hidden');
+                return false
+            });
+            svd.populateCartPanel()
+        })()
+    </script>
+    {% include 'snippets/google_analytics.html' %}
+{% endblock %}

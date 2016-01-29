@@ -1,0 +1,16 @@
+- model: cms.siteconfig
+  fields:
+    name: Default
+    slogan: ''
+    summary: ''
+    email: ''
+    is_active: Yes
+    vod: Yes
+    vod_data_source: http://localhost:8000/, http://localhost/shavida/static/
+
+- model: cms.flatpage
+  fields:
+    title: Test flat page
+    slug: test-flat-page
+    content: ''
+    show_in_footer: Yes

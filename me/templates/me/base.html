@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <div id="content">
+        <div class="wrapper">
+            <nav id="sub">
+                <ul>
+                    <li> <a href="{% url 'me:history' %}" class="history"> {% trans "Historique" %} </a> </li>
+                    <li> <a href="{% url 'ikwen:account_setup' %}" class="account"> {% trans "Infos compte" %} </a> </li>
+                </ul>
+            </nav>
+            {% block content_stage %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
