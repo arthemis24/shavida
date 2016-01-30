@@ -183,7 +183,7 @@ table.items td div.four-img.main > div {height: 1118px; width: 958px}
 #content.series-detail #media .item .actions {display: none}
 #content .episodes-list {clear:both; float: left; margin-top: 40px; width: 738px}
 #content .episodes-list li {display: block}
-#content .episodes-list button {background-color: #fff; border: none; box-shadow: none; float: right; width: 60px; height: 24px}
+#content .episodes-list button {background-color: #fff; border: none; box-shadow: none; float: right; height: 24px; margin-right: 9px; width: 24px}
 #content .episodes-list .episode {border-top: solid 1px #FCE5DD; float: left; padding: 5px 0; width: 100%}
 #content .episodes-list .name {float: left; margin-top: 5px; width: 540px}
 #content .episodes-list .name  span+span{color: #BB7A66; margin-left: 7px}

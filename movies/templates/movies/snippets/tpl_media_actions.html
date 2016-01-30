@@ -1,13 +1,14 @@
 {% load i18n %}
 {% if IS_VOD_OPERATOR %}
     <div class='poster'>
+        <a target="_blank" class="view-details"></a>
         <div class="actions">
-            <button class='trailer' title="{% trans "Watch trailer" %}"></button>
             {% if not request.user.is_authenticated %}
-                <a class='play connect detail' title="{% trans "Watch streaming" %}"></a>
+                <a class='play connect' title="{% trans "Watch streaming" %}"></a>
             {% else %}
-                <a target="_blank" class='play detail' title="{% trans "Watch streaming" %}"></a>
+                <a class='play' title="{% trans "Watch streaming" %}"></a>
             {% endif %}
+            <button class='trailer' title="{% trans "Watch trailer" %}"></button>
         </div>
     </div>
     <div class='title has-faded-edge'>

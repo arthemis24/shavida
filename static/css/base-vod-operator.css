@@ -109,11 +109,15 @@ nav.categories ul li a {float: left; font-size: 1em; padding: 5px 0 6px 24px}
 .item .load {float: right; font-size: 11px}
 .item button {background: none}
 /* .media class is added to alias .item class without altering its rules */
-.media .actions {background: rgba(0, 0, 0, 0); float: left; height: 100%; width: 100%; transition: background .3s}
-.media:hover .actions {background: rgba(0, 0, 0, .6); transition: background .3s}
-.media .actions .trailer {background: none; border: none; float: left; height: 45px; margin-top: 15px; width: 100%}
-.media .actions .play {float: left; height: 135px; margin-top: 45px; width: 100%}
-.media .actions .trailer + .play {margin-top: 30px}
+.media .view-details {background: rgba(0, 0, 0, 0); float: left; height: 100%; width: 100%; transition: background .3s}
+.media:hover .view-details {background: rgba(0, 0, 0, .6); transition: background .3s}
+.media .actions {margin: 158px 0 0 84px; height: 72px; position: absolute; width: 135px}
+.media .trailer {background: url('/shavida/static/img/watch-trailer1.png')no-repeat center;
+    background-size: 20px auto; border: none; float: right; filter: Alpha(opacity=0); opacity: 0; height: 45px; margin: 27px 6px 0 0; width: 45px}
+.media:hover .trailer {background-size: 45px auto; filter: Alpha(opacity=81); opacity: .81; transition: background-size .3s, box-shadow .3s, opacity .3s, filter .3s}
+.media .play {background: url('/shavida/static/img/Media-daumplayer-icon.png')no-repeat center;
+    background-size: 36px auto; float: right; filter: Alpha(opacity=0); opacity: 0; height: 72px; width: 72px}
+.media:hover .play {background-size: 72px auto; filter: Alpha(opacity=81); opacity: .81; transition: background-size .3s, box-shadow .3s, opacity .3s, filter .3s}
 
 table.items {border-collapse: collapse}
 table.items td {box-sizing: border-box; padding: 0; width: 240px}
@@ -135,7 +139,6 @@ table.items td div.four-img.main > div {height: 1118px; width: 958px}
 #media .synopsis .content {margin-top: 5px; text-align: justify}
 .media.episode .actions {float: right; height: 24px; width: 60px}
 .media.episode .actions button {height: 36px; margin: 0; width: 60px}
-#media .item .poster .actions .play {display: none}
 
 #suggestions .item .poster {background-position: center top; background-size: 180px auto; float: left; height: 200px; width: 175px}
 #suggestions .item:hover .poster {background-size: 210px auto}
@@ -144,20 +147,26 @@ table.items td div.four-img.main > div {height: 1118px; width: 958px}
 #suggestions .movie button {float: right}
 #avatar {background: url("http://static.cinemax.club/media/images/login-avatar.jpg") no-repeat center; height: 150px; margin: auto; width: 100%}
 #content.movie-detail header {text-transform: capitalize}
+#content.movie-detail #media .item .poster .actions {margin-top: 195px}
 #content.movie-detail #suggestions {clear: both; margin-top: 15px}
 #content.movie-detail #suggestions > .title {margin-bottom: 6px}
+#content.movie-detail #suggestions .media .actions {margin: 126px 0 0 36px}
+#content.movie-detail #suggestions .media .trailer {margin: 27px 0 0 15px}
 
 #content.series-detail section:first-child {float: left; padding: 15px; width: 740px}
 #content.series-detail section:not(:first-child) {margin-top: 0}
 #content.series-detail section header {font-size: 2em; margin-bottom: 6px; text-transform: capitalize}
+#content.series-detail #media .item .poster .actions {display: none}
 #content .episodes-list {clear:both; float: left; margin-top: 40px; width: 738px}
 #content .episodes-list li {display: block}
 #content .episodes-list button {background-color: #fff; border: none; box-shadow: none; float: right; width: 60px; height: 24px}
-#content .episodes-list .episode {border-top: solid 1px #FCE5DD; float: left; padding: 5px 0; width: 100%}
+#content .episodes-list .episode {border-top: solid 1px #FCE5DD; float: left; padding: 5px 0 9px; width: 100%}
+#content .episodes-list .episode .actions {margin-top: 0}
 #content .episodes-list .name {float: left; margin-top: 5px; width: 540px}
 #content .episodes-list .name  span+span{color: #BB7A66; margin-left: 7px}
 #content .episodes-list .order {float: right}
 #content.series-detail #suggestions {float: right; padding: 9px; width: 175px}
+#content.series-detail #suggestions .view-details {float: left; height: 100%; width: 100%}
 #content.series-detail #suggestions .item {border-bottom: solid 1px #FCE5DD; float: left; height: 240px; margin: 10px 0; padding: 0 0 9px 0; width: 176px}
 #content.series-detail #suggestions .item:first-child {margin: 2px 0 10px}
 #content.series-detail #suggestions .item:last-child {border-bottom: none}

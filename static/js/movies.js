@@ -469,7 +469,7 @@
         if (media.type == 'movie') {
             $tplMovie.find('.title').text(media.title);
             $tplMovie.find('.poster').attr('title', media.title  + ": " + media.display_load);
-            $tplMovie.find('a.detail').attr('href', "/movie/"+ media.slug);
+            $tplMovie.find('a').attr('href', "/movie/"+ media.slug);
             $tplMovie.find('.price').text(media.price);
             $tplMovie.find('span.load').text(media.display_load);
             $tplMovie.find('.order').attr('id', media.id).data({id: media.id, price: media.price, load: media.load,
@@ -482,7 +482,7 @@
         } else {
             $tplMovie.find('.title').text(media.title + " - saison " + media.season);
             $tplMovie.find('.poster').attr('title', media.title + " season "+ media.season);
-            $tplMovie.find('a.detail').attr('href', "/series/" + media.slug);
+            $tplMovie.find('a').attr('href', "/series/" + media.slug);
             $tplMovie.find('span.load').text(media.display_load);
             $tplMovie.find("a.button").attr('href',  "/series/" + media.slug).removeClass('order').show();
             $tplMovie.find('.trailer').hide();
