@@ -28,7 +28,8 @@ def get_base_context(request):
     context['bundles_url'] = reverse('movies:bundles')
     if request.user.is_authenticated():
         last_vod_prepayment = request.user.profile.get_last_vod_prepayment()
-        last_vod_prepayment.balance /= 1000.0
+        if last_vod_prepayment:
+            last_vod_prepayment.balance /= 1000.0
         context['last_vod_prepayment'] = last_vod_prepayment
     return context
 

@@ -1,15 +1,20 @@
 {% load i18n %}
 {% if IS_VOD_OPERATOR %}
     <div class='poster' style="background-image: url({{ media.poster.small_url }})">
+        {% if media.season %}
+            <a href="{% url 'movies:series_detail' media.slug %}" class="view-details"></a>
+        {% else %}
+            <a href="{% url 'movies:movie_detail' media.slug %}" class="view-details"></a>
+        {% endif %}
         <div class="actions">
-            {% if media.trailer_slug %}
-                <button class='trailer' title="{% trans "Watch trailer" %}" data-type="trailer" data-id="{{ media.id }}" style="float: left"></button>
-            {% endif %}
             {% if not request.user.is_authenticated %}
-                <button class='play connect' title="{% trans "Watch streaming" %}"></button>
+                <a class='play connect' title="{% trans "Watch streaming" %}"></a>
             {% else %}
-                <button class='play' title="{% trans "Watch streaming" %}" data-type="media" data-id="{{ media.id }}" style="float: left"></button>
+                <a class='play' title="{% trans "Watch streaming" %}" data-type="media" data-id="{{ media.id }}"></a>
             {% endif %}
+{#            {% if media.trailer_slug %}#}
+                <button class='trailer' title="{% trans "Watch trailer" %}" data-type="trailer" data-id="{{ media.id }}" style="float: left"></button>
+{#            {% endif %}#}
         </div>
     </div>
     <div class='title has-faded-edge'>{{ media.title }}{% if media.season %} {% trans "season" %} {{ media.season }}{% endif %}</div>

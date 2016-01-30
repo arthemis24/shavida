@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
+from django.template.defaultfilters import slugify
 from django.utils.module_loading import import_by_path
 from django.utils.translation import gettext as _
 
@@ -294,6 +295,7 @@ def get_media(request, *args, **kwargs):
 
 @login_required
 def stream(request, media_type, item_id, *args, **kwargs):
+    # TODO: Handle the reading of multipart files, else only the first part will be streamed
     referrer = request.META.get('HTTP_REFERER')
     response = {"success": True}
     if not referrer:
@@ -313,8 +315,8 @@ def stream(request, media_type, item_id, *args, **kwargs):
         if media.filename[-4:] != '.mp4':
             path = getattr(settings, 'NOT_MP4_HANDLER', None)
             if path:
-                url_maker = import_by_path(path)
-                resp = url_maker(request, media, *args, **kwargs)
+                not_mp4_handler = import_by_path(path)
+                resp = not_mp4_handler(request, media, *args, **kwargs)
                 if resp:
                     return resp
 

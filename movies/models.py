@@ -225,7 +225,7 @@ class Series(models.Model, MediaInterface):
     title = models.CharField(max_length=100,
                              help_text=_("Title of the series."))
     season = models.PositiveSmallIntegerField()
-    slug = models.SlugField(max_length=100, unique=True,
+    slug = models.SlugField(unique=True,
                             help_text=_("Auto filled. But add -seasonX manually. Eg: arrow-saison3"))
     release = models.DateField(blank=True, null=True,
                                help_text=_("Date of release of movie in country of origin."))
@@ -237,7 +237,7 @@ class Series(models.Model, MediaInterface):
     price = models.PositiveIntegerField(editable=is_content_vendor,
                                         help_text=_("Cost of sale of this series to VOD operators."))
     # Tells whether this Movie is part of an Adult category.
-    # Set automatically upon Movie.save() by checking categories
+    # Set automatically upon Series.save() by checking categories
     is_adult = models.BooleanField(default=False, editable=False)
     trailer_slug = models.SlugField(blank=True, null=True,
                                     help_text=_("Slug of the trailer bound to this series."))

@@ -64,18 +64,19 @@ float: right; height: 300%; margin-top: -20px; width: 20%}
 #top-notice-ctnr {left: 0; position: fixed; text-align: center; top: 60px; width: 100%}
 #lightbox {background: rgba(255, 255, 255, .54); height: 100%; position: fixed; left: 0; top: 0; width: 100%; z-index: 100}
 #lightbox.stream {
-    background: #242628;
-    background: -moz-radial-gradient(center, ellipse cover,  #242628 0%, #000000 100%);
-    background: -webkit-radial-gradient(center, ellipse cover,  #242628 0%,#000000 100%);
-    background: radial-gradient(ellipse at center,  #242628 0%,#000000 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#242628', endColorstr='#000000',GradientType=1 );
+    background: #45484d;
+background: -moz-radial-gradient(center, ellipse cover,  #45484d 0%, #111111 35%, #070707 44%, #030303 52%, #000000 66%, #000000 80%, #000000 100%);
+background: -webkit-radial-gradient(center, ellipse cover,  #45484d 0%,#111111 35%,#070707 44%,#030303 52%,#000000 66%,#000000 80%,#000000 100%);
+background: radial-gradient(ellipse at center,  #45484d 0%,#111111 35%,#070707 44%,#030303 52%,#000000 66%,#000000 80%,#000000 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 );
+cursor: pointer;
 }
 #lightbox .close {position: absolute; right: 0}
 #lightbox.stream .close {color: #000; text-shadow: 1px 1px 8px rgba(255, 0, 0, .54);}
 #lightbox .wrapper {height: 100%; width: 100%}
 #lightbox .dialog {background-color: #fff; border: 1px solid #FFAE30; margin: 0 auto; width: 360px; transition: background-color .3s}
 #lightbox .dialog .stage {padding: 0 15px 15px}
-#lightbox .dialog.player {height: 450px; width: 630px}
+#lightbox .dialog.player {cursor: default; height: 450px; width: 630px}
 #lightbox .dialog.player.spinner {float: none} /* Cancels rule float: left set by class .spinner */
 #lightbox .dialog.player.stream {background-color: #000; transition: background-color .3s}
 #lightbox .dialog.player .stream-error {padding: 36px 15px 0; text-align: center}

@@ -158,7 +158,10 @@ SALES_UNIT = "Volume"
 
 CURRENCY = "XAF"
 
-IKWEN_REGISTER_EVENTS = ('me.views.offer_welcome_bundle',)
+IKWEN_REGISTER_EVENTS = (
+    'me.views.create_member_profile',
+    'me.views.offer_welcome_bundle',
+)
 
 LOGOUT_REDIRECT_URL = 'movies:home'
 

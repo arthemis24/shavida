@@ -70,9 +70,12 @@
                 }, counterInterval)
             }
         }).bind('contextmenu',function() { return false });
-        $('div#lightbox .close').click(function() {
-            $('div#lightbox').removeClass('stream');
+        $('div#lightbox.stream').live('click', function() {
+            $('div#lightbox').removeClass('stream').fadeOut();
             document.getElementsByTagName('video')[0].pause();
+        });
+        $('div#lightbox .dialog.player').click(function(e) {
+            e.stopPropagation();
         });
         function showStreamError(msg) {
             $('div#lightbox .dialog.player video').hide();

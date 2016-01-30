@@ -109,14 +109,14 @@
             movieCategories.splice(0,1);
             ikwen.listItemsForHome(ikwen.mediaEndpoint, movieCategories[0], applySectionTemplate);
             movieCategories.splice(0,1);
-{#            $(window).scroll(function() {#}
-{#                var scrollTop = $(this).scrollTop();#}
-{#                if ($(document).height() - $(this).height() - scrollTop <= $('footer').height()) {#}
-{#                    if (movieCategories.length == 0) return;#}
-{#	                ikwen.listItemsForHome(ikwen.mediaEndpoint, movieCategories[0], applySectionTemplate);#}
-{#                    movieCategories.splice(0,1)#}
-{#                }#}
-{#            });#}
+            $(window).scroll(function() {
+                var scrollTop = $(this).scrollTop();
+                if ($(document).height() - $(this).height() - scrollTop <= $('footer').height()) {
+                    if (movieCategories.length == 0) return;
+	                ikwen.listItemsForHome(ikwen.mediaEndpoint, movieCategories[0], applySectionTemplate);
+                    movieCategories.splice(0,1)
+                }
+            });
             function shuffle(array) {
                 var counter = array.length, temp, index;
                 while (counter--) {index = (Math.random() * counter) | 0;
