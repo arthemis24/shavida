@@ -235,13 +235,6 @@ class Search(CustomerView):
             limit_movies, limit_series = 10000, 10000
         items = []
         if terms and len(terms) >= 2:
-            # for word in terms.split(' '):
-            #     word = slugify(word)[:4]
-            #     if word:
-            #         items.extend([movie for movie in Movie.objects.filter(slug__icontains=word, visible=True)[:limit_movies]])
-            #         series = [series for series in Series.objects.filter(slug__icontains=word, visible=True)[:limit_series]]
-            #         items.extend(series)
-
             stripped_terms = ' '.join([term.strip()[:4] for term in terms.split(' ') if term])
             if limit_movies > 0:
                 movies = [movie for movie in Movie.objects.raw_query(
